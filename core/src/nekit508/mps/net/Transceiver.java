@@ -20,8 +20,8 @@ public class Transceiver {
 
     public String state = "disabled";
 
-    public double length = 1, processed = 0;
-    public float progress = 0f;
+    public transient double length = 1, processed = 0;
+    public transient float progress = 0f;
 
     public boolean[] forTrans;
 
