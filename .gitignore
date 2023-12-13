@@ -5,7 +5,6 @@ cache/
 /.gradle/
 /artifacts/
 /copy.properties
-# gradle/wrapper/
 
 ### IntelliJ IDEA
 /.idea/
@@ -13,3 +12,11 @@ cache/
 ### Aseprite
 *.aseprite
 *.ase
+
+### Secret dev-only stuff
+*/tz/*
+
+### Generated files
+gen/
+bin/
+javax.annotation.processing.Processor
