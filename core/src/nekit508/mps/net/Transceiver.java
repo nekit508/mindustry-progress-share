@@ -34,8 +34,8 @@ public class Transceiver {
     public Transceiver(boolean[] ft) {
         forTrans = ft;
         try {
-            serverSocket = new ServerSocket();
-            serverSocket.bind(new InetSocketAddress("localhost", 6383));
+            serverSocket = new ServerSocket(63369);
+            Log.info(serverSocket.getInetAddress().getHostAddress());
             thread = Threads.daemon(() -> {
                 try {
                     state = "waiting for connection";

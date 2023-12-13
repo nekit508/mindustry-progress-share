@@ -334,6 +334,12 @@ subprojects.each { Project project ->
             project.configurations.runtimeClasspath.collect { File file ->
                 file.isDirectory() ? file : zipTree(file)
             }
+
+        }
+
+        from (rootProject.projectDir) {
+            include "mod.json"
+            include "mod.hjson"
         }
 
         finalizedBy project.tasks.copyJar

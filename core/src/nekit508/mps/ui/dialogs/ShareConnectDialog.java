@@ -101,7 +101,7 @@ public class ShareConnectDialog extends BaseDialog {
                 transceiver = new Transceiver(forTrans);
 
                 all.label(() -> Strings.format("@:@",
-                        transceiver.serverSocket.getInetAddress().toString(),
+                        transceiver.serverSocket.getInetAddress().getHostAddress(),
                         transceiver.serverSocket.getLocalPort()));
                 all.row();
                 all.label(() -> transceiver.getState());

@@ -52,6 +52,8 @@ project.tasks.create("createFinalJar", Jar) {
 }
 
 task dex {
+    boolean useandroid = true
+    println "${(useandroid == null) || (useandroid == true)}, $useandroid"
     doLast{
         if (!sdkRoot || !new File(sdkRoot).exists())
             throw new GradleException("No valid Android SDK found.")
