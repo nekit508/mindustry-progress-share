@@ -1,3 +1,5 @@
+import arc.files.Fi
+
 dependencies {
     compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
     compileOnly "com.github.Anuken.$mindustryDependencyType:core:$mindustryVersion"
@@ -13,6 +15,8 @@ ext {
     rawFile = "raw-${rootProject.ext.getOutputJar(project)}"
     dexFile = new File(project.buildDir, "dex-${rootProject.ext.getOutputJar(project)}")
     useandroid = rootProject.ext.localProperties.get("useandroid")
+    if (useandroid == null)
+        useandroid = true
 }
 
 task createAndroidJar(type: Jar) {
@@ -26,21 +30,18 @@ task createAndroidJar(type: Jar) {
         delete {
             "$project.buildDir/libs/$rawFile"
         }
-        copy {
-            from {
-                archiveFile.get().asFile
-            }
-            project.ext.copyPaths.each { p ->
-                into(p)
-            }
+        project.ext.copyPaths.each { file ->
+            file.mkdirs()
+            rootProject.ext.moveFile(new Fi(archiveFile.get().asFile), file)
         }
     }
 }
 
 task dex {
     doLast{
-        println "Use android ${useandroid == null || useandroid == true}."
-        if (useandroid == null || useandroid == true) {
+        println "Use android ${useandroid}."
+        println "${useandroid == null || useandroid == true}, $useandroid"
+        if (useandroid) {
             if (!sdkRoot || !new File(sdkRoot).exists())
                 throw new GradleException("No valid Android SDK found.")
             def platformRoot = new File("$sdkRoot/platforms/").listFiles().sort().reverse().find {
@@ -63,7 +64,7 @@ task dex {
         }
     }
 
-    if (useandroid == null || useandroid == true)
+    if (useandroid)
         finalizedBy project.tasks.createAndroidJar
 }
 
