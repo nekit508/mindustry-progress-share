@@ -5,6 +5,7 @@ cache/
 /.gradle/
 /artifacts/
 /copy.properties
+# gradle/wrapper/
 
 ### IntelliJ IDEA
 /.idea/

@@ -1,6 +1,7 @@
 import arc.files.Fi
 import arc.struct.ObjectMap
 import arc.struct.Seq
+import arc.util.Log
 
 import java.util.function.Consumer
 
@@ -102,6 +103,10 @@ ext {
     getOutputJar = {Project p ->
         return "${rootProject.name}-${p.name}-${p.version}.jar"
     }
+
+    moveFile = {Fi from, Fi to ->
+        from.copyTo(to)
+    }
 }
 
 subprojects.each { Project project ->
@@ -124,12 +129,14 @@ subprojects.each { Project project ->
         }
 
         copyPaths = [
-                "$rootProject.projectDir/artifacts",
+                new Fi("$rootProject.projectDir/artifacts"),
         ]
         if (rootProject.ext.copyProperties.containsKey(project.name))
-            copyPaths += Arrays.stream(rootProject.ext.copyProperties.get(project.name).split(";")).toList()
+            copyPaths += Arrays.stream(rootProject.ext.copyProperties.get(project.name).split(";")).<Fi>map(path
+                    -> new Fi(path)).toList()
 
-        mindustryVersion = "v144.3"
+        mindustryVersion = rootProject.properties.get("mindustryVersion")
+        $mindustryDependencyType = rootProject.properties.get("$mindustryDependencyType")
 
         child = { File p, String c ->
             return new File(p, c)
@@ -185,13 +192,9 @@ subprojects.each { Project project ->
 
     project.tasks.create("copyJar") {
         doLast {
-            copy {
-                from {
-                    project.tasks.jar.archiveFile.get()
-                }
-                project.ext.copyPaths.each { p ->
-                    into(p)
-                }
+            project.ext.copyPaths.each { file ->
+                file.mkdirs()
+                rootProject.ext.moveFile(new Fi(project.tasks.jar.archiveFile.get().getAsFile()), file)
             }
         }
     }
@@ -229,12 +232,6 @@ subprojects.each { Project project ->
                 println "Dependency path for project ${project} is ${groupId}:${artifactId}:${version}"
             }
         }
-    }
-}
-
-task publishProj {
-    doLast {
-        publishToMavenLocal
     }
 }
 

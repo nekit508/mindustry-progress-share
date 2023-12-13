@@ -80,7 +80,6 @@ public class Transceiver {
                 String filePath = file.path().substring(base.length());
 
                 state = Strings.format("Transmitting file @ (@ bytes)", filePath, bytes.length);
-                Log.info(state);
 
                 writes.str(filePath);
                 writes.i(bytes.length);
@@ -93,6 +92,10 @@ public class Transceiver {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendCampaign() {
+
     }
 
     public void close() {

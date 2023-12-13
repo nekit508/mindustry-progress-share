@@ -1,0 +1,14 @@
+{
+    "main": "nekit508.mps.core.MPSCore",
+    "name": "mindustry-progress-share",
+    "displayName": "Mindustry progress share",
+    "author": "[white]ne[blue]kit[red]508",
+    "repo": "https://github.com/nekit508/mindustry-progress-share",
+    "subtitle": "Share it!",
+    "description": "Mod for sharing progress between two devices in local network.",
+    "version": "1.0.1",
+    "minGameVersion": 146,
+    "java": true,
+    "hidden": true,
+    "hideBrowser": false
+}

@@ -58,7 +58,6 @@ public class Receiver {
 
             Fi file = Core.settings.getDataDirectory().child(filePath);
             state = Strings.format("Receiving file @ (@ bytes)", filePath, bytesC);
-            Log.info(state);
 
             for (int j = 0; j < bytesC; j++) {
                 bytes[j] = reads.b();

@@ -28,15 +28,18 @@ public class ShareConnectDialog extends BaseDialog {
     public ObjectMap<Integer, Runnable> modeInterfaces = ObjectMap.of(
             0, (Runnable) () -> {
                 {
-                    all.check("settings", b -> forTrans[0] = b).growX().get().setChecked(forTrans[0]);
+                    all.defaults().growX();
+                    all.check("settings", b -> forTrans[0] = b).get().setChecked(forTrans[0]);
                     all.row();
-                    all.check("maps", b -> forTrans[1] = b).growX().get().setChecked(forTrans[1]);
+                    all.check("maps", b -> forTrans[1] = b).get().setChecked(forTrans[1]);
                     all.row();
-                    all.check("saves", b -> forTrans[2] = b).growX().get().setChecked(forTrans[2]);
+                    all.check("saves", b -> forTrans[2] = b).get().setChecked(forTrans[2]);
                     all.row();
-                    all.check("mods", b -> forTrans[3] = b).growX().get().setChecked(forTrans[3]);
+                    all.check("mods", b -> forTrans[3] = b).get().setChecked(forTrans[3]);
                     all.row();
-                    all.check("schematics", b -> forTrans[4] = b).growX().get().setChecked(forTrans[4]);
+                    all.check("schematics", b -> forTrans[4] = b).get().setChecked(forTrans[4]);
+                    /*all.row();
+                    all.button("campaign", () -> rebuild(4));*/
                 }
 
                 all.row();
@@ -113,6 +116,10 @@ public class ShareConnectDialog extends BaseDialog {
                             Strings.fixed(transceiver.progress * 100, 1), (long) transceiver.processed,
                             (long) transceiver.length, delta, "b");
                 }, () -> Pal.bar, () -> transceiver.progress)).growX();
+            },
+
+            4, (Runnable) () -> {
+
             }
     );
 
